@@ -106,6 +106,23 @@
                 transform: translateY(0);
             }
         }
+
+        /* Required field styling */
+        .required {
+            color: #ef4444;
+        }
+
+        /* Error styling */
+        .error {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
     </style>
     
     <script>
@@ -241,23 +258,23 @@
                     <div class="space-y-4">
                         <label class="block text-lg font-semibold text-gray-800">
                             <i class="fas fa-venus-mars text-primary mr-2"></i>
-                            Q1. Please select your gender:
+                            Q1. Please select your gender: <span class="required">*</span>
                         </label>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="gender" value="male" class="custom-radio mr-3">
+                                <input type="radio" name="gender" value="male" class="custom-radio mr-3" required>
                                 <span>Male</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="gender" value="female" class="custom-radio mr-3">
+                                <input type="radio" name="gender" value="female" class="custom-radio mr-3" required>
                                 <span>Female</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="gender" value="other" class="custom-radio mr-3">
+                                <input type="radio" name="gender" value="other" class="custom-radio mr-3" required>
                                 <span>Other</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="gender" value="prefer_not_say" class="custom-radio mr-3">
+                                <input type="radio" name="gender" value="prefer_not_say" class="custom-radio mr-3" required>
                                 <span>Prefer not to say</span>
                             </label>
                         </div>
@@ -267,31 +284,31 @@
                     <div class="space-y-4">
                         <label class="block text-lg font-semibold text-gray-800">
                             <i class="fas fa-birthday-cake text-primary mr-2"></i>
-                            Q2. What is your age group?
+                            Q2. What is your age group? <span class="required">*</span>
                         </label>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="age" value="below_18" class="custom-radio mr-3">
+                                <input type="radio" name="age" value="below_18" class="custom-radio mr-3" required>
                                 <span>Below 18 years</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="age" value="18_25" class="custom-radio mr-3">
+                                <input type="radio" name="age" value="18_25" class="custom-radio mr-3" required>
                                 <span>18–25 years</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="age" value="26_35" class="custom-radio mr-3">
+                                <input type="radio" name="age" value="26_35" class="custom-radio mr-3" required>
                                 <span>26–35 years</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="age" value="36_45" class="custom-radio mr-3">
+                                <input type="radio" name="age" value="36_45" class="custom-radio mr-3" required>
                                 <span>36–45 years</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="age" value="46_60" class="custom-radio mr-3">
+                                <input type="radio" name="age" value="46_60" class="custom-radio mr-3" required>
                                 <span>46–60 years</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="age" value="over_60" class="custom-radio mr-3">
+                                <input type="radio" name="age" value="over_60" class="custom-radio mr-3" required>
                                 <span>Over 60 years</span>
                             </label>
                         </div>
@@ -301,31 +318,31 @@
                     <div class="space-y-4">
                         <label class="block text-lg font-semibold text-gray-800">
                             <i class="fas fa-graduation-cap text-primary mr-2"></i>
-                            Q3. What is your highest level of education?
+                            Q3. What is your highest level of education? <span class="required">*</span>
                         </label>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="education" value="no_formal" class="custom-radio mr-3">
+                                <input type="radio" name="education" value="no_formal" class="custom-radio mr-3" required>
                                 <span>No formal education</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="education" value="primary" class="custom-radio mr-3">
+                                <input type="radio" name="education" value="primary" class="custom-radio mr-3" required>
                                 <span>Primary School</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="education" value="secondary" class="custom-radio mr-3">
+                                <input type="radio" name="education" value="secondary" class="custom-radio mr-3" required>
                                 <span>Secondary School / High School</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="education" value="technical" class="custom-radio mr-3">
+                                <input type="radio" name="education" value="technical" class="custom-radio mr-3" required>
                                 <span>Technical/Vocational College</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="education" value="university" class="custom-radio mr-3">
+                                <input type="radio" name="education" value="university" class="custom-radio mr-3" required>
                                 <span>University (Bachelor's degree)</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="education" value="postgraduate" class="custom-radio mr-3">
+                                <input type="radio" name="education" value="postgraduate" class="custom-radio mr-3" required>
                                 <span>Postgraduate (Master's/PhD)</span>
                             </label>
                         </div>
@@ -335,39 +352,43 @@
                     <div class="space-y-4">
                         <label class="block text-lg font-semibold text-gray-800">
                             <i class="fas fa-briefcase text-primary mr-2"></i>
-                            Q4. What is your current occupation?
+                            Q4. What is your current occupation? <span class="required">*</span>
                         </label>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="occupation" value="student" class="custom-radio mr-3">
+                                <input type="radio" name="occupation" value="student" class="custom-radio mr-3" required>
                                 <span>Student</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="occupation" value="government" class="custom-radio mr-3">
+                                <input type="radio" name="occupation" value="government" class="custom-radio mr-3" required>
                                 <span>Government/Public Sector</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="occupation" value="private" class="custom-radio mr-3">
+                                <input type="radio" name="occupation" value="private" class="custom-radio mr-3" required>
                                 <span>Private Sector</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="occupation" value="self_employed" class="custom-radio mr-3">
+                                <input type="radio" name="occupation" value="self_employed" class="custom-radio mr-3" required>
                                 <span>Self-employed/Informal</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="occupation" value="retired" class="custom-radio mr-3">
+                                <input type="radio" name="occupation" value="retired" class="custom-radio mr-3" required>
                                 <span>Retired</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="occupation" value="unemployed" class="custom-radio mr-3">
+                                <input type="radio" name="occupation" value="unemployed" class="custom-radio mr-3" required>
                                 <span>Unemployed</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="occupation" value="homemaker" class="custom-radio mr-3">
+                                <input type="radio" name="occupation" value="homemaker" class="custom-radio mr-3" required>
                                 <span>Homemaker</span>
                             </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="occupation" value="other" class="custom-radio mr-3" required>
+                                <span>Other</span>
+                            </label>
                         </div>
-                        <input type="text" name="occupation_other" placeholder="Other (Please specify)" 
+                        <input type="text" name="occupation_other" placeholder="If other, please specify" 
                                class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
                     </div>
                     
@@ -375,31 +396,31 @@
                     <div class="space-y-4">
                         <label class="block text-lg font-semibold text-gray-800">
                             <i class="fas fa-money-bill-wave text-primary mr-2"></i>
-                            Q5. What is your average monthly household income?
+                            Q5. What is your average monthly household income? <span class="required">*</span>
                         </label>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="income" value="below_10k" class="custom-radio mr-3">
+                                <input type="radio" name="income" value="below_10k" class="custom-radio mr-3" required>
                                 <span>Below KES 10,000</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="income" value="10k_30k" class="custom-radio mr-3">
+                                <input type="radio" name="income" value="10k_30k" class="custom-radio mr-3" required>
                                 <span>KES 10,001 – 30,000</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="income" value="30k_60k" class="custom-radio mr-3">
+                                <input type="radio" name="income" value="30k_60k" class="custom-radio mr-3" required>
                                 <span>KES 30,001 – 60,000</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="income" value="60k_100k" class="custom-radio mr-3">
+                                <input type="radio" name="income" value="60k_100k" class="custom-radio mr-3" required>
                                 <span>KES 60,001 – 100,000</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="income" value="above_100k" class="custom-radio mr-3">
+                                <input type="radio" name="income" value="above_100k" class="custom-radio mr-3" required>
                                 <span>Above KES 100,000</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="income" value="prefer_not_say" class="custom-radio mr-3">
+                                <input type="radio" name="income" value="prefer_not_say" class="custom-radio mr-3" required>
                                 <span>Prefer not to say</span>
                             </label>
                         </div>
@@ -409,14 +430,14 @@
                     <div class="space-y-4">
                         <label class="block text-lg font-semibold text-gray-800">
                             <i class="fas fa-home text-primary mr-2"></i>
-                            Q6. Where is your primary residence?
+                            Q6. Where is your primary residence? <span class="required">*</span>
                         </label>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <input type="text" name="sub_county" placeholder="Sub-County" 
+                            <input type="text" name="sub_county" placeholder="Sub-County" required
                                    class="p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
-                            <input type="text" name="ward" placeholder="Ward" 
+                            <input type="text" name="ward" placeholder="Ward" required
                                    class="p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
-                            <input type="text" name="estate" placeholder="Estate" 
+                            <input type="text" name="estate" placeholder="Estate" required
                                    class="p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
                         </div>
                         <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 w-fit">
@@ -429,15 +450,15 @@
                     <div class="space-y-4">
                         <label class="block text-lg font-semibold text-gray-800">
                             <i class="fas fa-car text-primary mr-2"></i>
-                            Q7. Do you or does your household own a private car?
+                            Q7. Do you or does your household own a private car? <span class="required">*</span>
                         </label>
                         <div class="flex space-x-4">
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="car_ownership" value="yes" class="custom-radio mr-3">
+                                <input type="radio" name="car_ownership" value="yes" class="custom-radio mr-3" required>
                                 <span>Yes</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="car_ownership" value="no" class="custom-radio mr-3">
+                                <input type="radio" name="car_ownership" value="no" class="custom-radio mr-3" required>
                                 <span>No</span>
                             </label>
                         </div>
@@ -447,27 +468,27 @@
                     <div class="space-y-4">
                         <label class="block text-lg font-semibold text-gray-800">
                             <i class="fas fa-bus text-primary mr-2"></i>
-                            Q8. How often do you use buses or matatus for transport?
+                            Q8. How often do you use buses or matatus for transport? <span class="required">*</span>
                         </label>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="bus_usage" value="never" class="custom-radio mr-3">
+                                <input type="radio" name="bus_usage" value="never" class="custom-radio mr-3" required>
                                 <span>Never</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="bus_usage" value="rarely" class="custom-radio mr-3">
+                                <input type="radio" name="bus_usage" value="rarely" class="custom-radio mr-3" required>
                                 <span>Rarely</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="bus_usage" value="sometimes" class="custom-radio mr-3">
+                                <input type="radio" name="bus_usage" value="sometimes" class="custom-radio mr-3" required>
                                 <span>Sometimes</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="bus_usage" value="often" class="custom-radio mr-3">
+                                <input type="radio" name="bus_usage" value="often" class="custom-radio mr-3" required>
                                 <span>Often</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="bus_usage" value="daily" class="custom-radio mr-3">
+                                <input type="radio" name="bus_usage" value="daily" class="custom-radio mr-3" required>
                                 <span>Daily</span>
                             </label>
                         </div>
@@ -477,78 +498,140 @@
                     <div class="space-y-4">
                         <label class="block text-lg font-semibold text-gray-800">
                             <i class="fas fa-walking text-primary mr-2"></i>
-                            Q9. How often do you use walking as your only mode of transport?
+                            Q9. How often do you use walking as your only mode of transport? <span class="required">*</span>
                         </label>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="walking_usage" value="never" class="custom-radio mr-3">
+                                <input type="radio" name="walking_usage" value="never" class="custom-radio mr-3" required>
                                 <span>Never</span>
-                            </label>
-                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="walking_usage" value="rarely" class="custom-radio mr-3">
+                            </label><label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="walking_usage" value="rarely" class="custom-radio mr-3" required>
                                 <span>Rarely</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="walking_usage" value="sometimes" class="custom-radio mr-3">
+                                <input type="radio" name="walking_usage" value="sometimes" class="custom-radio mr-3" required>
                                 <span>Sometimes</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="walking_usage" value="often" class="custom-radio mr-3">
+                                <input type="radio" name="walking_usage" value="often" class="custom-radio mr-3" required>
                                 <span>Often</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="walking_usage" value="daily" class="custom-radio mr-3">
-                                <span>Daily</span></label>
+                                <input type="radio" name="walking_usage" value="daily" class="custom-radio mr-3" required>
+                                <span>Daily</span>
+                            </label>
                         </div>
                     </div>
                 <!-- Recent Trip -->
                 <div class="space-y-4">
                     <label class="block text-lg font-semibold text-gray-800">
                         <i class="fas fa-route text-primary mr-2"></i>
-                        Q10. For your most recent trip, what was your origin and destination?
+                        Q10. For your most recent trip, what was your origin and destination? <span class="required">*</span>
                     </label>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" name="trip_origin" placeholder="Origin (e.g., Home address or landmark)" 
+                        <input type="text" name="trip_origin" placeholder="Origin (e.g., Home address or landmark)" required
                                class="p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
-                        <input type="text" name="trip_destination" placeholder="Destination (e.g., Work, School, Market)" 
+                        <input type="text" name="trip_destination" placeholder="Destination (e.g., Work, School, Market)" required
                                class="p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
                     </div>
                 </div>
                 
-                <!-- Transport Mode -->
-                <div class="space-y-4">
-                    <label class="block text-lg font-semibold text-gray-800">
-                        <i class="fas fa-shipping-fast text-primary mr-2"></i>
-                        Q11. Which mode of transport did you use for that trip?
-                    </label>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                        <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                            <input type="radio" name="transport_mode" value="walking" class="custom-radio mr-3">
-                            <span>Walking</span>
-                        </label>
-                        <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                            <input type="radio" name="transport_mode" value="bicycle" class="custom-radio mr-3">
-                            <span>Bicycle</span>
-                        </label>
-                        <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                            <input type="radio" name="transport_mode" value="matatu_bus" class="custom-radio mr-3">
-                            <span>Matatu/Bus</span>
-                        </label>
-                        <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                            <input type="radio" name="transport_mode" value="personal_car" class="custom-radio mr-3">
-                            <span>Personal Car</span>
-                        </label>
-                        <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                            <input type="radio" name="transport_mode" value="motorcycle" class="custom-radio mr-3">
-                            <span>Motorcycle/Boda-boda</span>
-                        </label>
-                        <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                            <input type="radio" name="transport_mode" value="taxi" class="custom-radio mr-3">
-                            <span>Taxi/Ride-sharing</span>
-                        </label>
+                <!-- Transport Mode - Updated Q11a, Q11b, Q11c -->
+                <div class="space-y-8">
+                    <div class="bg-blue-50 rounded-xl p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                            <i class="fas fa-shipping-fast text-primary mr-2"></i>
+                            Q11. Transport Modes Used During Your Recent Trip
+                        </h3>
+                        <p class="text-gray-600 mb-6">Please tell us about each segment of your journey:</p>
+                        
+                        <!-- Q11a - First Mile -->
+                        <div class="space-y-4 mb-6">
+                            <label class="block text-lg font-semibold text-gray-800">
+                                Q11a. Which mode of transport did you use for the first mile of your trip (from your starting point to the main transport connection)? <span class="required">*</span>
+                            </label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="first_mile_transport" value="walking" class="custom-radio mr-3" required>
+                                    <span>Walking</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="first_mile_transport" value="bicycle" class="custom-radio mr-3" required>
+                                    <span>Bicycle</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="first_mile_transport" value="matatu_bus" class="custom-radio mr-3" required>
+                                    <span>Matatu/Bus</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="first_mile_transport" value="personal_car" class="custom-radio mr-3" required>
+                                    <span>Personal Car</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="first_mile_transport" value="motorcycle" class="custom-radio mr-3" required>
+                                    <span>Motorcycle/Boda-boda</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q11b - Main Mile -->
+                        <div class="space-y-4 mb-6">
+                            <label class="block text-lg font-semibold text-gray-800">
+                                Q11b. Which mode of transport did you use for the main mile of your trip (the longest part of your journey)? <span class="required">*</span>
+                            </label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="main_mile_transport" value="walking" class="custom-radio mr-3" required>
+                                    <span>Walking</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="main_mile_transport" value="bicycle" class="custom-radio mr-3" required>
+                                    <span>Bicycle</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="main_mile_transport" value="matatu_bus" class="custom-radio mr-3" required>
+                                    <span>Matatu/Bus</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="main_mile_transport" value="personal_car" class="custom-radio mr-3" required>
+                                    <span>Personal Car</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="main_mile_transport" value="motorcycle" class="custom-radio mr-3" required>
+                                    <span>Motorcycle/Boda-boda</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q11c - Last Mile -->
+                        <div class="space-y-4">
+                            <label class="block text-lg font-semibold text-gray-800">
+                                Q11c. Which mode of transport did you use for the last mile of your trip (from the main connection to your final destination)? <span class="required">*</span>
+                            </label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="last_mile_transport" value="walking" class="custom-radio mr-3" required>
+                                    <span>Walking</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="last_mile_transport" value="bicycle" class="custom-radio mr-3" required>
+                                    <span>Bicycle</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="last_mile_transport" value="matatu_bus" class="custom-radio mr-3" required>
+                                    <span>Matatu/Bus</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="last_mile_transport" value="personal_car" class="custom-radio mr-3" required>
+                                    <span>Personal Car</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="last_mile_transport" value="motorcycle" class="custom-radio mr-3" required>
+                                    <span>Motorcycle/Boda-boda</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <input type="text" name="transport_mode_other" placeholder="Other (Please specify)" 
-                           class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
                 </div>
             </div>
         </div>
@@ -582,104 +665,104 @@
                     </div>
                     
                     <div class="space-y-4">
-                        <label class="block text-lg font-semibold text-gray-800">Q1. How safe do you feel walking in the Nairobi area in general?</label>
+                        <label class="block text-lg font-semibold text-gray-800">Q12. How safe do you feel walking in the Nairobi area in general? <span class="required">*</span></label>
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                             <label class="flex items-center p-4 bg-red-50 rounded-xl cursor-pointer hover:bg-red-100 transition-all duration-200">
-                                <input type="radio" name="general_safety" value="very_unsafe" class="custom-radio mr-3">
+                                <input type="radio" name="general_safety" value="very_unsafe" class="custom-radio mr-3" required>
                                 <span>Very unsafe</span>
                             </label>
                             <label class="flex items-center p-4 bg-orange-50 rounded-xl cursor-pointer hover:bg-orange-100 transition-all duration-200">
-                                <input type="radio" name="general_safety" value="unsafe" class="custom-radio mr-3">
+                                <input type="radio" name="general_safety" value="unsafe" class="custom-radio mr-3" required>
                                 <span>Unsafe</span>
                             </label>
                             <label class="flex items-center p-4 bg-yellow-50 rounded-xl cursor-pointer hover:bg-yellow-100 transition-all duration-200">
-                                <input type="radio" name="general_safety" value="neutral" class="custom-radio mr-3">
+                                <input type="radio" name="general_safety" value="neutral" class="custom-radio mr-3" required>
                                 <span>Neutral</span>
                             </label>
                             <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
-                                <input type="radio" name="general_safety" value="safe" class="custom-radio mr-3">
+                                <input type="radio" name="general_safety" value="safe" class="custom-radio mr-3" required>
                                 <span>Safe</span>
                             </label>
                             <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
-                                <input type="radio" name="general_safety" value="very_safe" class="custom-radio mr-3">
+                                <input type="radio" name="general_safety" value="very_safe" class="custom-radio mr-3" required>
                                 <span>Very safe</span>
                             </label>
                         </div>
                     </div>
                     
                     <div class="space-y-4">
-                        <label class="block text-lg font-semibold text-gray-800">Q2. How concerned are you about pedestrian accidents while walking?</label>
+                        <label class="block text-lg font-semibold text-gray-800">Q13. How concerned are you about pedestrian accidents while walking? <span class="required">*</span></label>
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="accident_concern" value="not_concerned" class="custom-radio mr-3">
+                                <input type="radio" name="accident_concern" value="not_concerned" class="custom-radio mr-3" required>
                                 <span>Not concerned</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="accident_concern" value="slightly_concerned" class="custom-radio mr-3">
+                                <input type="radio" name="accident_concern" value="slightly_concerned" class="custom-radio mr-3" required>
                                 <span>Slightly concerned</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="accident_concern" value="moderately_concerned" class="custom-radio mr-3">
+                                <input type="radio" name="accident_concern" value="moderately_concerned" class="custom-radio mr-3" required>
                                 <span>Moderately concerned</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="accident_concern" value="very_concerned" class="custom-radio mr-3">
+                                <input type="radio" name="accident_concern" value="very_concerned" class="custom-radio mr-3" required>
                                 <span>Very concerned</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="accident_concern" value="extremely_concerned" class="custom-radio mr-3">
+                                <input type="radio" name="accident_concern" value="extremely_concerned" class="custom-radio mr-3" required>
                                 <span>Extremely concerned</span>
                             </label>
                         </div>
                     </div>
                     
                     <div class="space-y-4">
-                        <label class="block text-lg font-semibold text-gray-800">Q3. How often do drivers yield to pedestrians at designated crossings?</label>
+                        <label class="block text-lg font-semibold text-gray-800">Q14. How often do drivers yield to pedestrians at designated crossings? <span class="required">*</span></label>
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="driver_yield" value="never" class="custom-radio mr-3">
+                                <input type="radio" name="driver_yield" value="never" class="custom-radio mr-3" required>
                                 <span>Never</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="driver_yield" value="rarely" class="custom-radio mr-3">
+                                <input type="radio" name="driver_yield" value="rarely" class="custom-radio mr-3" required>
                                 <span>Rarely</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="driver_yield" value="sometimes" class="custom-radio mr-3">
+                                <input type="radio" name="driver_yield" value="sometimes" class="custom-radio mr-3" required>
                                 <span>Sometimes</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="driver_yield" value="often" class="custom-radio mr-3">
+                                <input type="radio" name="driver_yield" value="often" class="custom-radio mr-3" required>
                                 <span>Often</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="driver_yield" value="always" class="custom-radio mr-3">
+                                <input type="radio" name="driver_yield" value="always" class="custom-radio mr-3" required>
                                 <span>Always</span>
                             </label>
                         </div>
                     </div>
                     
                     <div class="space-y-4">
-                        <label class="block text-lg font-semibold text-gray-800">Q4. How safe do you feel walking at night near your residence?</label>
+                        <label class="block text-lg font-semibold text-gray-800">Q15. How safe do you feel walking at night near your residence? <span class="required">*</span></label>
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                             <label class="flex items-center p-4 bg-red-50 rounded-xl cursor-pointer hover:bg-red-100 transition-all duration-200">
-                                <input type="radio" name="night_safety" value="very_unsafe" class="custom-radio mr-3">
+                                <input type="radio" name="night_safety" value="very_unsafe" class="custom-radio mr-3" required>
                                 <span>Very unsafe</span>
                             </label>
                             <label class="flex items-center p-4 bg-orange-50 rounded-xl cursor-pointer hover:bg-orange-100 transition-all duration-200">
-                                <input type="radio" name="night_safety" value="unsafe" class="custom-radio mr-3">
+                                <input type="radio" name="night_safety" value="unsafe" class="custom-radio mr-3" required>
                                 <span>Unsafe</span>
                             </label>
                             <label class="flex items-center p-4 bg-yellow-50 rounded-xl cursor-pointer hover:bg-yellow-100 transition-all duration-200">
-                                <input type="radio" name="night_safety" value="neutral" class="custom-radio mr-3">
+                                <input type="radio" name="night_safety" value="neutral" class="custom-radio mr-3" required>
                                 <span>Neutral</span>
                             </label>
                             <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
-                                <input type="radio" name="night_safety" value="safe" class="custom-radio mr-3">
+                                <input type="radio" name="night_safety" value="safe" class="custom-radio mr-3" required>
                                 <span>Safe</span>
                             </label>
                             <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
-                                <input type="radio" name="night_safety" value="very_safe" class="custom-radio mr-3">
+                                <input type="radio" name="night_safety" value="very_safe" class="custom-radio mr-3" required>
                                 <span>Very safe</span>
                             </label>
                         </div>
@@ -696,112 +779,109 @@
                     </div>
                     
                     <div class="space-y-4">
-                        <label class="block text-lg font-semibold text-gray-800">Q5. How important is it that walkways are well-maintained and in good condition?</label>
+                        <label class="block text-lg font-semibold text-gray-800">Q16. How important is it that walkways are well-maintained and in good condition? <span class="required">*</span></label>
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="walkway_importance" value="not_important" class="custom-radio mr-3">
+                                <input type="radio" name="walkway_importance" value="not_important" class="custom-radio mr-3" required>
                                 <span>Not important</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="walkway_importance" value="slightly_important" class="custom-radio mr-3">
+                                <input type="radio" name="walkway_importance" value="slightly_important" class="custom-radio mr-3" required>
                                 <span>Slightly important</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="walkway_importance" value="moderately_important" class="custom-radio mr-3">
+                                <input type="radio" name="walkway_importance" value="moderately_important" class="custom-radio mr-3" required>
                                 <span>Moderately important</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="walkway_importance" value="very_important" class="custom-radio mr-3">
+                                <input type="radio" name="walkway_importance" value="very_important" class="custom-radio mr-3" required>
                                 <span>Very important</span>
                             </label>
                             <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
-                                <input type="radio" name="walkway_importance" value="extremely_important" class="custom-radio mr-3">
+                                <input type="radio" name="walkway_importance" value="extremely_important" class="custom-radio mr-3" required>
                                 <span>Extremely important</span>
                             </label>
                         </div>
                     </div>
                     
                     <div class="space-y-4">
-                        <label class="block text-lg font-semibold text-gray-800">Q6. How often do you encounter obstacles or poor conditions on pedestrian walkways?</label>
+                        <label class="block text-lg font-semibold text-gray-800">Q17. How often do you encounter obstacles or poor conditions on pedestrian walkways? <span class="required">*</span></label>
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                             <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
-                                <input type="radio" name="obstacles_frequency" value="never" class="custom-radio mr-3">
+                                <input type="radio" name="obstacles_frequency" value="never" class="custom-radio mr-3" required>
                                 <span>Never</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="obstacles_frequency" value="rarely" class="custom-radio mr-3">
+                                <input type="radio" name="obstacles_frequency" value="rarely" class="custom-radio mr-3" required>
                                 <span>Rarely</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="obstacles_frequency" value="sometimes" class="custom-radio mr-3">
+                                <input type="radio" name="obstacles_frequency" value="sometimes" class="custom-radio mr-3" required>
                                 <span>Sometimes</span>
                             </label>
                             <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="radio" name="obstacles_frequency" value="often" class="custom-radio mr-3">
+                                <input type="radio" name="obstacles_frequency" value="often" class="custom-radio mr-3" required>
                                 <span>Often</span>
                             </label>
                             <label class="flex items-center p-4 bg-red-50 rounded-xl cursor-pointer hover:bg-red-100 transition-all duration-200">
-                                <input type="radio" name="obstacles_frequency" value="always" class="custom-radio mr-3">
+                                <input type="radio" name="obstacles_frequency" value="always" class="custom-radio mr-3" required>
                                 <span>Always</span>
                             </label>
                         </div>
                     </div>
                     
                     <div class="space-y-4">
-                        <label class="block text-lg font-semibold text-gray-800">Q7. How strongly do you agree that pedestrian paths efficiently connect to key destinations?</label>
+                        <label class="block text-lg font-semibold text-gray-800">Q18. How strongly do you agree that pedestrian paths efficiently connect to key destinations? <span class="required">*</span></label>
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                             <label class="flex items-center p-4 bg-red-50 rounded-xl cursor-pointer hover:bg-red-100 transition-all duration-200">
-                                <input type="radio" name="path_connectivity" value="strongly_disagree" class="custom-radio mr-3">
+                                <input type="radio" name="path_connectivity" value="strongly_disagree" class="custom-radio mr-3" required>
                                 <span>Strongly disagree</span>
                             </label>
                             <label class="flex items-center p-4 bg-orange-50 rounded-xl cursor-pointer hover:bg-orange-100 transition-all duration-200">
-                                <input type="radio" name="path_connectivity" value="disagree" class="custom-radio mr-3">
+                                <input type="radio" name="path_connectivity" value="disagree" class="custom-radio mr-3" required>
                                 <span>Disagree</span>
                             </label>
                             <label class="flex items-center p-4 bg-yellow-50 rounded-xl cursor-pointer hover:bg-yellow-100 transition-all duration-200">
-                                <input type="radio" name="path_connectivity" value="neutral" class="custom-radio mr-3">
+                                <input type="radio" name="path_connectivity" value="neutral" class="custom-radio mr-3" required>
                                 <span>Neutral</span>
                             </label>
                             <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
-                                <input type="radio" name="path_connectivity" value="agree" class="custom-radio mr-3">
+                                <input type="radio" name="path_connectivity" value="agree" class="custom-radio mr-3" required>
                                 <span>Agree</span>
                             </label>
                             <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
-                                <input type="radio" name="path_connectivity" value="strongly_agree" class="custom-radio mr-3">
+                                <input type="radio" name="path_connectivity" value="strongly_agree" class="custom-radio mr-3" required>
                                 <span>Strongly agree</span>
                             </label>
                         </div>
                     </div>
                     
                     <div class="space-y-4">
-                        <label class="block text-lg font-semibold text-gray-800">Q8. How satisfied are you with the comfort and shade provided along pedestrian routes?</label>
+                        <label class="block text-lg font-semibold text-gray-800">Q19. How satisfied are you with the comfort and shade provided along pedestrian routes? <span class="required">*</span></label>
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                             <label class="flex items-center p-4 bg-red-50 rounded-xl cursor-pointer hover:bg-red-100 transition-all duration-200">
-                                <input type="radio" name="comfort_satisfaction" value="very_dissatisfied" class="custom-radio mr-3">
+                                <input type="radio" name="comfort_satisfaction" value="very_dissatisfied" class="custom-radio mr-3" required>
                                 <span>Very dissatisfied</span>
                             </label>
                             <label class="flex items-center p-4 bg-orange-50 rounded-xl cursor-pointer hover:bg-orange-100 transition-all duration-200">
-                                <input type="radio" name="comfort_satisfaction" value="dissatisfied" class="custom-radio mr-3">
+                                <input type="radio" name="comfort_satisfaction" value="dissatisfied" class="custom-radio mr-3" required>
                                 <span>Dissatisfied</span>
                             </label>
                             <label class="flex items-center p-4 bg-yellow-50 rounded-xl cursor-pointer hover:bg-yellow-100 transition-all duration-200">
-                                <input type="radio" name="comfort_satisfaction" value="neutral" class="custom-radio mr-3">
+                                <input type="radio" name="comfort_satisfaction" value="neutral" class="custom-radio mr-3" required>
                                 <span>Neutral</span>
                             </label>
                             <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
-                                <input type="radio" name="comfort_satisfaction" value="satisfied" class="custom-radio mr-3">
+                                <input type="radio" name="comfort_satisfaction" value="satisfied" class="custom-radio mr-3" required>
                                 <span>Satisfied</span>
                             </label>
                             <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
-                                <input type="radio" name="comfort_satisfaction" value="very_satisfied" class="custom-radio mr-3">
+                                <input type="radio" name="comfort_satisfaction" value="very_satisfied" class="custom-radio mr-3" required>
                                 <span>Very satisfied</span>
                             </label>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Continue with remaining sections using the same pattern... -->
-                <!-- For brevity, I'll add a few more key sections -->
                 
                 <!-- Barriers Question -->
                 <div class="space-y-6">
@@ -813,61 +893,60 @@
                     </div>
                     
                     <div class="space-y-4">
-                        <label class="block text-lg font-semibold text-gray-800">Q29. What are the main barriers that discourage you from walking more often? (Select all that apply)</label>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="checkbox" name="barriers[]" value="poor_sidewalk" class="custom-checkbox mr-3">
-                                <span>Poor sidewalk condition</span>
-                            </label>
-                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="checkbox" name="barriers[]" value="lack_shade" class="custom-checkbox mr-3">
-                                <span>Lack of shade or shelter</span>
-                            </label>
-                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="checkbox" name="barriers[]" value="unsafe_crossings" class="custom-checkbox mr-3">
-                                <span>Unsafe road crossings</span>
-                            </label>
-                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="checkbox" name="barriers[]" value="long_distance" class="custom-checkbox mr-3">
-                                <span>Long distance to bus stops</span>
-                            </label>
-                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="checkbox" name="barriers[]" value="crime_concerns" class="custom-checkbox mr-3">
-                                <span>Crime or harassment concerns</span>
-                            </label>
-                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="checkbox" name="barriers[]" value="poor_lighting" class="custom-checkbox mr-3">
-                                <span>Poor street lighting</span>
-                            </label>
-                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="checkbox" name="barriers[]" value="vehicle_speeds" class="custom-checkbox mr-3">
-                                <span>High vehicle speeds</span>
-                            </label>
-                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="checkbox" name="barriers[]" value="lack_signals" class="custom-checkbox mr-3">
-                                <span>Lack of pedestrian signals</span>
-                            </label>
-                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="checkbox" name="barriers[]" value="no_amenities" class="custom-checkbox mr-3">
-                                <span>No pedestrian amenities</span>
-                            </label>
-                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
-                                <input type="checkbox" name="barriers[]" value="narrow_sidewalks" class="custom-checkbox mr-3">
-                                <span>Narrow/crowded sidewalks</span>
-                            </label>
-                        </div>
-                        <input type="text" name="barriers_other" placeholder="Other barriers (please specify)" 
-                               class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
-                    </div>
-                </div>
-                
+<label class="block text-lg font-semibold text-gray-800">Q20. What are the main barriers that discourage you from walking more often? (Select all that apply) <span class="required">*</span></label>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="poor_sidewalk" class="custom-checkbox mr-3" required>
+<span>Poor sidewalk condition</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="lack_shade" class="custom-checkbox mr-3">
+<span>Lack of shade or shelter</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="unsafe_crossings" class="custom-checkbox mr-3">
+<span>Unsafe road crossings</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="long_distance" class="custom-checkbox mr-3">
+<span>Long distance to bus stops</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="crime_concerns" class="custom-checkbox mr-3">
+<span>Crime or harassment concerns</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="poor_lighting" class="custom-checkbox mr-3">
+<span>Poor street lighting</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="vehicle_speeds" class="custom-checkbox mr-3">
+<span>High vehicle speeds</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="lack_signals" class="custom-checkbox mr-3">
+<span>Lack of pedestrian signals</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="no_amenities" class="custom-checkbox mr-3">
+<span>No pedestrian amenities</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="narrow_sidewalks" class="custom-checkbox mr-3">
+<span>Narrow/crowded sidewalks</span>
+</label>
+</div>
+<input type="text" name="barriers_other" placeholder="Other barriers (please specify)" 
+                                class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
+</div>
+</div>
                 <!-- Comments -->
                 <div class="space-y-4">
                     <label class="block text-lg font-semibold text-gray-800">
                         <i class="fas fa-comments text-primary mr-2"></i>
-                        Q30. Additional comments or suggestions regarding pedestrian safety and walkability:
+                        Q21. Additional comments or suggestions regarding pedestrian safety and walkability: <span class="required">*</span>
                     </label>
-                    <textarea name="additional_comments" rows="6" 
+                    <textarea name="additional_comments" rows="6" required
                               placeholder="Your insights are valuable and will help inform strategies to enhance safe, walkable streets..." 
                               class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200 resize-none"></textarea>
                 </div>
@@ -904,12 +983,13 @@
             </div>
         </div>
         <h3 class="text-2xl font-bold text-gray-800 mb-4">Survey Submitted Successfully!</h3>
-        <p class="text-gray-600 mb-6">Thank you foryour participation in this important research. Your responses have been recorded securely.</p>
-<button onclick="closeSuccessModal()" class="bg-primary text-white px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-colors duration-200">
-Close
-</button>
+        <p class="text-gray-600 mb-6">Thank you for your participation in this important research. Your responses have been recorded securely.</p>
+        <button onclick="closeSuccessModal()" class="bg-primary text-white px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-colors duration-200">
+            Close
+        </button>
+    </div>
 </div>
-</div>
+
 <!-- AOS Animation Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 
@@ -921,31 +1001,106 @@ Close
         once: true
     });
 
+    // Form validation
+    function validateForm() {
+        const form = document.getElementById('surveyForm');
+        let isValid = true;
+        const errors = [];
+
+        // Remove previous error styling
+        form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+        form.querySelectorAll('.error-message').forEach(el => el.remove());
+
+        // Check required radio groups
+        const radioGroups = ['gender', 'age', 'education', 'occupation', 'income', 'car_ownership', 'bus_usage', 'walking_usage', 'first_mile_transport', 'main_mile_transport', 'last_mile_transport', 'general_safety', 'accident_concern', 'driver_yield', 'night_safety', 'walkway_importance', 'obstacles_frequency', 'path_connectivity', 'comfort_satisfaction'];
+        
+        radioGroups.forEach(groupName => {
+            const radios = form.querySelectorAll(`input[name="${groupName}"]`);
+            const checked = form.querySelector(`input[name="${groupName}"]:checked`);
+            if (!checked) {
+                isValid = false;
+                radios[0].closest('.space-y-4').classList.add('error');
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-message';
+                errorMsg.textContent = 'This field is required';
+                radios[0].closest('.space-y-4').appendChild(errorMsg);
+                errors.push(`${groupName.replace('_', ' ')} is required`);
+            }
+        });
+
+        // Check required text fields
+        const requiredTextFields = ['trip_origin', 'trip_destination', 'sub_county', 'ward', 'estate', 'additional_comments'];
+        
+        requiredTextFields.forEach(fieldName => {
+            const field = form.querySelector(`[name="${fieldName}"]`);
+            if (field && !field.value.trim()) {
+                isValid = false;
+                field.classList.add('error');
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-message';
+                errorMsg.textContent = 'This field is required';
+                field.parentNode.appendChild(errorMsg);
+                errors.push(`${fieldName.replace('_', ' ')} is required`);
+            }
+        });
+
+        // Check barriers checkboxes (at least one required)
+        const barrierCheckboxes = form.querySelectorAll('input[name="barriers[]"]');
+        const checkedBarriers = form.querySelectorAll('input[name="barriers[]"]:checked');
+        if (checkedBarriers.length === 0) {
+            isValid = false;
+            barrierCheckboxes[0].closest('.space-y-4').classList.add('error');
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'error-message';
+            errorMsg.textContent = 'Please select at least one barrier';
+            barrierCheckboxes[0].closest('.space-y-4').appendChild(errorMsg);
+            errors.push('Barriers selection is required');
+        }
+
+        if (!isValid) {
+            // Scroll to first error
+            const firstError = form.querySelector('.error');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            // Show error summary
+            alert('Please fill in all required fields before submitting.');
+        }
+
+        return isValid;
+    }
+
     // Progress tracking
     function updateProgress() {
         const form = document.getElementById('surveyForm');
-        const inputs = form.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked, input[type="text"][value], textarea[value]');
-        const totalInputs = form.querySelectorAll('input[type="radio"], input[type="checkbox"], input[type="text"], textarea').length;
-        
-        let filledInputs = 0;
-        
+        let totalFields = 0;
+        let filledFields = 0;
+
         // Count radio groups
-        const radioGroups = {};
-        form.querySelectorAll('input[type="radio"]').forEach(radio => {
-            if (!radioGroups[radio.name]) radioGroups[radio.name] = false;
-            if (radio.checked) radioGroups[radio.name] = true;
+        const radioGroups = ['gender', 'age', 'education', 'occupation', 'income', 'car_ownership', 'bus_usage', 'walking_usage', 'first_mile_transport', 'main_mile_transport', 'last_mile_transport', 'general_safety', 'accident_concern', 'driver_yield', 'night_safety', 'walkway_importance', 'obstacles_frequency', 'path_connectivity', 'comfort_satisfaction'];
+        
+        radioGroups.forEach(groupName => {
+            totalFields++;
+            const checked = form.querySelector(`input[name="${groupName}"]:checked`);
+            if (checked) filledFields++;
         });
-        filledInputs += Object.values(radioGroups).filter(Boolean).length;
+
+        // Count required text fields
+        const requiredTextFields = ['trip_origin', 'trip_destination', 'sub_county', 'ward', 'estate', 'additional_comments'];
         
-        // Count checkboxes
-        filledInputs += form.querySelectorAll('input[type="checkbox"]:checked').length;
-        
-        // Count text inputs with values
-        form.querySelectorAll('input[type="text"], textarea').forEach(input => {
-            if (input.value.trim()) filledInputs++;
+        requiredTextFields.forEach(fieldName => {
+            totalFields++;
+            const field = form.querySelector(`[name="${fieldName}"]`);
+            if (field && field.value.trim()) filledFields++;
         });
-        
-        const progress = Math.min((filledInputs / 50) * 100, 100); // Assuming ~50 total questions
+
+        // Count barriers (counts as 1 field)
+        totalFields++;
+        const checkedBarriers = form.querySelectorAll('input[name="barriers[]"]:checked');
+        if (checkedBarriers.length > 0) filledFields++;
+
+        const progress = Math.min((filledFields / totalFields) * 100, 100);
         
         // Update progress bar
         document.getElementById('progressBar').style.width = progress + '%';
@@ -964,6 +1119,11 @@ Close
     document.getElementById('surveyForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
+        // Validate form first
+        if (!validateForm()) {
+            return;
+        }
+
         const submitBtn = document.getElementById('submitBtn');
         const originalText = submitBtn.innerHTML;
         
@@ -984,6 +1144,7 @@ Close
             
             if (response.ok) {
                 showSuccessModal();
+                clearDraft();
             } else {
                 throw new Error('Submission failed');
             }
@@ -1045,7 +1206,19 @@ Close
     function startAutoSave() {
         autoSaveInterval = setInterval(() => {
             const formData = new FormData(document.getElementById('surveyForm'));
-            localStorage.setItem('survey_draft', JSON.stringify(Object.fromEntries(formData)));
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+            localStorage.setItem('survey_draft', JSON.stringify(data));
         }, 30000); // Save every 30 seconds
     }
 
@@ -1055,12 +1228,22 @@ Close
         if (draft) {
             const data = JSON.parse(draft);
             Object.entries(data).forEach(([name, value]) => {
-                const input = document.querySelector(`[name="${name}"]`);
-                if (input) {
-                    if (input.type === 'radio' || input.type === 'checkbox') {
-                        input.checked = true;
-                    } else {
-                        input.value = value;
+                if (Array.isArray(value)) {
+                    value.forEach(v => {
+                        const input = document.querySelector(`[name="${name}"][value="${v}"]`);
+                        if (input) {
+                            input.checked = true;
+                        }
+                    });
+                } else {
+                    const input = document.querySelector(`[name="${name}"]`);
+                    if (input) {
+                        if (input.type === 'radio' || input.type === 'checkbox') {
+                            const specificInput = document.querySelector(`[name="${name}"][value="${value}"]`);
+                            if (specificInput) specificInput.checked = true;
+                        } else {
+                            input.value = value;
+                        }
                     }
                 }
             });
@@ -1068,16 +1251,16 @@ Close
         }
     }
 
+    // Clear draft after successful submission
+    function clearDraft() {
+        localStorage.removeItem('survey_draft');
+    }
+
     // Initialize auto-save and load draft
     document.addEventListener('DOMContentLoaded', function() {
         loadDraft();
         startAutoSave();
     });
-
-    // Clear draft after successful submission
-    function clearDraft() {
-        localStorage.removeItem('survey_draft');
-    }
 </script>
 </body>
 </html>
