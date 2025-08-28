@@ -1,5 +1,5 @@
 <?php
-// submit_survey.php - Clean Production Version
+// submit_survey.php - Minimal Changes Only
 header('Content-Type: application/json');
 
 // Database configuration
@@ -53,6 +53,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data['transport_mode'] = $_POST['transport_mode'] ?? '';
     $data['transport_mode_other'] = $_POST['transport_mode_other'] ?? '';
     
+    // NEW: Add the three new transport mode fields
+    $data['transport_mode_first_mile'] = $_POST['transport_mode_first_mile'] ?? '';
+    $data['transport_mode_main_mile'] = $_POST['transport_mode_main_mile'] ?? '';
+    $data['transport_mode_last_mile'] = $_POST['transport_mode_last_mile'] ?? '';
+    
     // WOD Questions
     $data['general_safety'] = $_POST['general_safety'] ?? '';
     $data['accident_concern'] = $_POST['accident_concern'] ?? '';
@@ -76,18 +81,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data['ip_address'] = $_SERVER['REMOTE_ADDR'] ?? '';
     $data['user_agent'] = $_SERVER['HTTP_USER_AGENT'] ?? '';
     
-    // Insert query
+    // Insert query - UPDATED to include the 3 new fields
     try {
         $sql = "INSERT INTO survey_responses (
             gender, age, education, occupation, occupation_other, income, 
             sub_county, ward, estate, residence_privacy, car_ownership, 
             bus_usage, walking_usage, trip_origin, trip_destination, 
-            transport_mode, transport_mode_other, general_safety, 
-            accident_concern, driver_yield, night_safety, walkway_importance, 
+            transport_mode, transport_mode_other, 
+            transport_mode_first_mile, transport_mode_main_mile, transport_mode_last_mile,
+            general_safety, accident_concern, driver_yield, night_safety, walkway_importance, 
             obstacles_frequency, path_connectivity, comfort_satisfaction, 
             barriers, barriers_other, additional_comments, submission_time, 
             ip_address, user_agent
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($sql);
         
@@ -95,13 +101,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("System error occurred");
         }
         
-        $stmt->bind_param("sssssssssssssssssssssssssssssss",
+        $stmt->bind_param("ssssssssssssssssssssssssssssssssss",
             $data['gender'], $data['age'], $data['education'], $data['occupation'], 
             $data['occupation_other'], $data['income'], $data['sub_county'], 
             $data['ward'], $data['estate'], $data['residence_privacy'], 
             $data['car_ownership'], $data['bus_usage'], $data['walking_usage'], 
             $data['trip_origin'], $data['trip_destination'], $data['transport_mode'], 
-            $data['transport_mode_other'], $data['general_safety'], $data['accident_concern'], 
+            $data['transport_mode_other'], 
+            $data['transport_mode_first_mile'], $data['transport_mode_main_mile'], $data['transport_mode_last_mile'],
+            $data['general_safety'], $data['accident_concern'], 
             $data['driver_yield'], $data['night_safety'], $data['walkway_importance'], 
             $data['obstacles_frequency'], $data['path_connectivity'], $data['comfort_satisfaction'], 
             $data['barriers'], $data['barriers_other'], $data['additional_comments'], 
