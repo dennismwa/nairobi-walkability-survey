@@ -1,6 +1,6 @@
-<!-- database.sql -->
-CREATE DATABASE IF NOT EXISTS nairobi_survey CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE nairobi_survey;
+
+CREATE DATABASE IF NOT EXISTS vxjtgclw_nairobi_survey CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE vxjtgclw_nairobi_survey;
 CREATE TABLE survey_responses (
 id INT PRIMARY KEY AUTO_INCREMENT,
 -- Basic Information
