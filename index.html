@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nairobi Walkability Survey</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(16px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.125);
+        }
+        
+        .section-gradient {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .submit-gradient {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .floating-dots::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 2px, transparent 2px),
+                              radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 2px, transparent 2px),
+                              radial-gradient(circle at 40% 80%, rgba(255,255,255,0.08) 1px, transparent 1px);
+            background-size: 50px 50px, 30px 30px, 25px 25px;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        .progress-ring {
+            transition: stroke-dashoffset 0.3s ease;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        
+        /* Custom checkbox and radio styles */
+        .custom-checkbox:checked {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+        
+        .custom-radio:checked {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+        
+        /* Smooth animations */
+        .slide-up {
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Required field styling */
+        .required {
+            color: #ef4444;
+        }
+
+        /* Error styling */
+        .error {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#667eea',
+                        secondary: '#764ba2',
+                        accent: '#f093fb'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="gradient-bg min-h-screen smooth-scroll">
+    
+    <!-- Progress Bar -->
+    <div class="fixed top-0 left-0 w-full h-1 bg-white bg-opacity-20 z-50">
+        <div id="progressBar" class="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-300 ease-out" style="width: 0%"></div>
+    </div>
+    
+    <!-- Floating Progress Indicator -->
+    <div class="fixed top-6 right-6 z-40">
+        <div class="relative w-16 h-16">
+            <svg class="w-16 h-16" viewBox="0 0 36 36">
+                <path
+                    d="M18 2.0845
+                      a 15.9155 15.9155 0 0 1 0 31.831
+                      a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.2)"
+                    stroke-width="2"
+                />
+                <path
+                    id="progressRing"
+                    class="progress-ring"
+                    d="M18 2.0845
+                      a 15.9155 15.9155 0 0 1 0 31.831
+                      a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none"
+                    stroke="#ffffff"
+                    stroke-width="2"
+                    stroke-dasharray="100, 100"
+                    stroke-dashoffset="100"
+                />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <span id="progressText" class="text-white text-xs font-semibold">0%</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        
+        <!-- Header Section -->
+        <div class="glass-effect rounded-3xl mb-8 overflow-hidden shadow-2xl hover-lift" data-aos="fade-up">
+            <div class="relative section-gradient p-12 text-white text-center floating-dots">
+                <div class="relative z-10">
+                    <div class="mb-6">
+                        <i class="fas fa-walking text-6xl opacity-90"></i>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                        Nairobi Walkability Survey
+                    </h1>
+                    <p class="text-xl opacity-90 mb-6">
+                        Enhancing Road Safety Through Walkable-Oriented Development
+                    </p>
+                    <div class="inline-flex items-center bg-white bg-opacity-20 rounded-full px-6 py-3">
+                        <i class="fas fa-bus mr-3"></i>
+                        <span class="font-medium">BRT Line 3 Case Study</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Researcher Info -->
+<div class="bg-white p-6 md:p-8">
+    <div class="flex flex-col items-center text-center">
+        <div class="bg-primary bg-opacity-10 rounded-full p-4 mb-6">
+            <i class="fas fa-user-graduate text-primary text-3xl"></i>
+        </div>
+        <div class="max-w-2xl mx-auto">
+            <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-4">Research Information</h3>
+            <p class="text-gray-600 mb-6 text-sm md:text-base leading-relaxed">
+                This research investigates how Walkable-Oriented Development (WOD) can improve pedestrian safety and mobility around Nairobi's BRT Line 3 stations. We hope your participation will guide government and NaMATA in making walking safer and more inclusive for everyone.
+            </p>
+            <div class="bg-gray-50 rounded-xl p-4 md:p-6 mb-6">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-sm">
+                    <div class="flex items-center">
+                        <i class="fas fa-clock text-primary mr-2"></i>
+                        <span>Duration: 7-10 minutes</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-shield-alt text-green-500 mr-2"></i>
+                        <span>Confidential & Secure</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-sm text-gray-500">
+                <strong>Alex Ngamau</strong> - Master's Student<br>
+                Faculty of Creative Science and Engineering, Waseda University
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Survey Form -->
+        <form id="surveyForm" class="space-y-8">
+            
+            <!-- Section I: Basic Information -->
+            <div class="glass-effect rounded-3xl overflow-hidden shadow-xl hover-lift" data-aos="fade-up" data-aos-delay="100">
+                <div class="section-gradient p-6">
+                    <div class="flex items-center text-white">
+                        <div class="bg-white bg-opacity-20 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <span class="font-bold text-lg">I</span>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold">Basic Information</h2>
+                            <p class="opacity-90">Tell us about yourself</p>
+                        </div>
+                        <div class="ml-auto">
+                            <i class="fas fa-user-circle text-3xl opacity-80"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-8 bg-white space-y-8">
+                    
+                    <!-- Gender -->
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">
+                            <i class="fas fa-venus-mars text-primary mr-2"></i>
+                            Q1. Please select your gender: <span class="required">*</span>
+                        </label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="gender" value="male" class="custom-radio mr-3" required>
+                                <span>Male</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="gender" value="female" class="custom-radio mr-3" required>
+                                <span>Female</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="gender" value="other" class="custom-radio mr-3" required>
+                                <span>Other</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="gender" value="prefer_not_say" class="custom-radio mr-3" required>
+                                <span>Prefer not to say</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Age -->
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">
+                            <i class="fas fa-birthday-cake text-primary mr-2"></i>
+                            Q2. What is your age group? <span class="required">*</span>
+                        </label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="age" value="below_18" class="custom-radio mr-3" required>
+                                <span>Below 18 years</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="age" value="18_25" class="custom-radio mr-3" required>
+                                <span>18–25 years</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="age" value="26_35" class="custom-radio mr-3" required>
+                                <span>26–35 years</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="age" value="36_45" class="custom-radio mr-3" required>
+                                <span>36–45 years</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="age" value="46_60" class="custom-radio mr-3" required>
+                                <span>46–60 years</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="age" value="over_60" class="custom-radio mr-3" required>
+                                <span>Over 60 years</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Education -->
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">
+                            <i class="fas fa-graduation-cap text-primary mr-2"></i>
+                            Q3. What is your highest level of education? <span class="required">*</span>
+                        </label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="education" value="no_formal" class="custom-radio mr-3" required>
+                                <span>No formal education</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="education" value="primary" class="custom-radio mr-3" required>
+                                <span>Primary School</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="education" value="secondary" class="custom-radio mr-3" required>
+                                <span>Secondary School / High School</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="education" value="technical" class="custom-radio mr-3" required>
+                                <span>Technical/Vocational College</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="education" value="university" class="custom-radio mr-3" required>
+                                <span>University (Bachelor's degree)</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="education" value="postgraduate" class="custom-radio mr-3" required>
+                                <span>Postgraduate (Master's/PhD)</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Occupation -->
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">
+                            <i class="fas fa-briefcase text-primary mr-2"></i>
+                            Q4. What is your current occupation? <span class="required">*</span>
+                        </label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="occupation" value="student" class="custom-radio mr-3" required>
+                                <span>Student</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="occupation" value="government" class="custom-radio mr-3" required>
+                                <span>Government/Public Sector</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="occupation" value="private" class="custom-radio mr-3" required>
+                                <span>Private Sector</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="occupation" value="self_employed" class="custom-radio mr-3" required>
+                                <span>Self-employed/Informal</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="occupation" value="retired" class="custom-radio mr-3" required>
+                                <span>Retired</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="occupation" value="unemployed" class="custom-radio mr-3" required>
+                                <span>Unemployed</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="occupation" value="homemaker" class="custom-radio mr-3" required>
+                                <span>Homemaker</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="occupation" value="other" class="custom-radio mr-3" required>
+                                <span>Other</span>
+                            </label>
+                        </div>
+                        <input type="text" name="occupation_other" placeholder="If other, please specify" 
+                               class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
+                    </div>
+                    
+                    <!-- Income -->
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">
+                            <i class="fas fa-money-bill-wave text-primary mr-2"></i>
+                            Q5. What is your average monthly household income? <span class="required">*</span>
+                        </label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="income" value="below_10k" class="custom-radio mr-3" required>
+                                <span>Below KES 10,000</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="income" value="10k_30k" class="custom-radio mr-3" required>
+                                <span>KES 10,001 – 30,000</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="income" value="30k_60k" class="custom-radio mr-3" required>
+                                <span>KES 30,001 – 60,000</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="income" value="60k_100k" class="custom-radio mr-3" required>
+                                <span>KES 60,001 – 100,000</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="income" value="above_100k" class="custom-radio mr-3" required>
+                                <span>Above KES 100,000</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="income" value="prefer_not_say" class="custom-radio mr-3" required>
+                                <span>Prefer not to say</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Residence -->
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">
+                            <i class="fas fa-home text-primary mr-2"></i>
+                            Q6. Where is your primary residence? <span class="required">*</span>
+                        </label>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <input type="text" name="sub_county" placeholder="Sub-County" required
+                                   class="p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
+                            <input type="text" name="ward" placeholder="Ward" required
+                                   class="p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
+                            <input type="text" name="estate" placeholder="Estate" required
+                                   class="p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
+                        </div>
+                        <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 w-fit">
+                            <input type="checkbox" name="residence_privacy" value="prefer_not_say" class="custom-checkbox mr-3">
+                            <span>Prefer not to say</span>
+                        </label>
+                    </div>
+                    
+                    <!-- Car Ownership -->
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">
+                            <i class="fas fa-car text-primary mr-2"></i>
+                            Q7. Do you or does your household own a private car? <span class="required">*</span>
+                        </label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="car_ownership" value="yes" class="custom-radio mr-3" required>
+                                <span>Yes</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="car_ownership" value="no" class="custom-radio mr-3" required>
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Bus Usage -->
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">
+                            <i class="fas fa-bus text-primary mr-2"></i>
+                            Q8. How often do you use buses or matatus for transport? <span class="required">*</span>
+                        </label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="bus_usage" value="never" class="custom-radio mr-3" required>
+                                <span>Never</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="bus_usage" value="rarely" class="custom-radio mr-3" required>
+                                <span>Rarely</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="bus_usage" value="sometimes" class="custom-radio mr-3" required>
+                                <span>Sometimes</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="bus_usage" value="often" class="custom-radio mr-3" required>
+                                <span>Often</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="bus_usage" value="daily" class="custom-radio mr-3" required>
+                                <span>Daily</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Walking Usage -->
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">
+                            <i class="fas fa-walking text-primary mr-2"></i>
+                            Q9. How often do you use walking as your only mode of transport? <span class="required">*</span>
+                        </label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="walking_usage" value="never" class="custom-radio mr-3" required>
+                                <span>Never</span>
+                            </label><label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="walking_usage" value="rarely" class="custom-radio mr-3" required>
+                                <span>Rarely</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="walking_usage" value="sometimes" class="custom-radio mr-3" required>
+                                <span>Sometimes</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="walking_usage" value="often" class="custom-radio mr-3" required>
+                                <span>Often</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="walking_usage" value="daily" class="custom-radio mr-3" required>
+                                <span>Daily</span>
+                            </label>
+                        </div>
+                    </div>
+                <!-- Recent Trip -->
+                <div class="space-y-4">
+                    <label class="block text-lg font-semibold text-gray-800">
+                        <i class="fas fa-route text-primary mr-2"></i>
+                        Q10. For your most recent trip, what was your origin and destination? <span class="required">*</span>
+                    </label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" name="trip_origin" placeholder="Origin (e.g., Home address or landmark)" required
+                               class="p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
+                        <input type="text" name="trip_destination" placeholder="Destination (e.g., Work, School, Market)" required
+                               class="p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
+                    </div>
+                </div>
+                
+                <!-- Transport Mode - Updated Q11a, Q11b, Q11c -->
+                <div class="space-y-8">
+                    <div class="bg-blue-50 rounded-xl p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                            <i class="fas fa-shipping-fast text-primary mr-2"></i>
+                            Q11. Transport Modes Used During Your Recent Trip
+                        </h3>
+                        <p class="text-gray-600 mb-6">Please tell us about each segment of your journey:</p>
+                        
+                        <!-- Q11a - First Mile -->
+                        <div class="space-y-4 mb-6">
+                            <label class="block text-lg font-semibold text-gray-800">
+                                Q11a. Which mode of transport did you use for the first mile of your trip (from your starting point to the main transport connection)? <span class="required">*</span>
+                            </label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="first_mile_transport" value="walking" class="custom-radio mr-3" required>
+                                    <span>Walking</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="first_mile_transport" value="bicycle" class="custom-radio mr-3" required>
+                                    <span>Bicycle</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="first_mile_transport" value="matatu_bus" class="custom-radio mr-3" required>
+                                    <span>Matatu/Bus</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="first_mile_transport" value="personal_car" class="custom-radio mr-3" required>
+                                    <span>Personal Car</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="first_mile_transport" value="motorcycle" class="custom-radio mr-3" required>
+                                    <span>Motorcycle/Boda-boda</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q11b - Main Mile -->
+                        <div class="space-y-4 mb-6">
+                            <label class="block text-lg font-semibold text-gray-800">
+                                Q11b. Which mode of transport did you use for the main mile of your trip (the longest part of your journey)? <span class="required">*</span>
+                            </label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="main_mile_transport" value="walking" class="custom-radio mr-3" required>
+                                    <span>Walking</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="main_mile_transport" value="bicycle" class="custom-radio mr-3" required>
+                                    <span>Bicycle</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="main_mile_transport" value="matatu_bus" class="custom-radio mr-3" required>
+                                    <span>Matatu/Bus</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="main_mile_transport" value="personal_car" class="custom-radio mr-3" required>
+                                    <span>Personal Car</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="main_mile_transport" value="motorcycle" class="custom-radio mr-3" required>
+                                    <span>Motorcycle/Boda-boda</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q11c - Last Mile -->
+                        <div class="space-y-4">
+                            <label class="block text-lg font-semibold text-gray-800">
+                                Q11c. Which mode of transport did you use for the last mile of your trip (from the main connection to your final destination)? <span class="required">*</span>
+                            </label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="last_mile_transport" value="walking" class="custom-radio mr-3" required>
+                                    <span>Walking</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="last_mile_transport" value="bicycle" class="custom-radio mr-3" required>
+                                    <span>Bicycle</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="last_mile_transport" value="matatu_bus" class="custom-radio mr-3" required>
+                                    <span>Matatu/Bus</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="last_mile_transport" value="personal_car" class="custom-radio mr-3" required>
+                                    <span>Personal Car</span>
+                                </label>
+                                <label class="flex items-center p-4 bg-white rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200 border border-gray-200">
+                                    <input type="radio" name="last_mile_transport" value="motorcycle" class="custom-radio mr-3" required>
+                                    <span>Motorcycle/Boda-boda</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section II: WOD Questions -->
+        <div class="glass-effect rounded-3xl overflow-hidden shadow-xl hover-lift" data-aos="fade-up" data-aos-delay="200">
+            <div class="section-gradient p-6">
+                <div class="flex items-center text-white">
+                    <div class="bg-white bg-opacity-20 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                        <span class="font-bold text-lg">II</span>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold">Walkable-Oriented Development</h2>
+                        <p class="opacity-90">Your experience with pedestrian infrastructure</p>
+                    </div>
+                    <div class="ml-auto">
+                        <i class="fas fa-road text-3xl opacity-80"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-8 bg-white space-y-12">
+                
+                <!-- Section A: Pedestrian Safety Perception -->
+                <div class="space-y-6">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-primary bg-opacity-10 rounded-full p-3 mr-4">
+                            <i class="fas fa-shield-alt text-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">Section A: Pedestrian Safety Perception</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">Q12. How safe do you feel walking in the Nairobi area in general? <span class="required">*</span></label>
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                            <label class="flex items-center p-4 bg-red-50 rounded-xl cursor-pointer hover:bg-red-100 transition-all duration-200">
+                                <input type="radio" name="general_safety" value="very_unsafe" class="custom-radio mr-3" required>
+                                <span>Very unsafe</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-orange-50 rounded-xl cursor-pointer hover:bg-orange-100 transition-all duration-200">
+                                <input type="radio" name="general_safety" value="unsafe" class="custom-radio mr-3" required>
+                                <span>Unsafe</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-yellow-50 rounded-xl cursor-pointer hover:bg-yellow-100 transition-all duration-200">
+                                <input type="radio" name="general_safety" value="neutral" class="custom-radio mr-3" required>
+                                <span>Neutral</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
+                                <input type="radio" name="general_safety" value="safe" class="custom-radio mr-3" required>
+                                <span>Safe</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
+                                <input type="radio" name="general_safety" value="very_safe" class="custom-radio mr-3" required>
+                                <span>Very safe</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">Q13. How concerned are you about pedestrian accidents while walking? <span class="required">*</span></label>
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="accident_concern" value="not_concerned" class="custom-radio mr-3" required>
+                                <span>Not concerned</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="accident_concern" value="slightly_concerned" class="custom-radio mr-3" required>
+                                <span>Slightly concerned</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="accident_concern" value="moderately_concerned" class="custom-radio mr-3" required>
+                                <span>Moderately concerned</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="accident_concern" value="very_concerned" class="custom-radio mr-3" required>
+                                <span>Very concerned</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="accident_concern" value="extremely_concerned" class="custom-radio mr-3" required>
+                                <span>Extremely concerned</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">Q14. How often do drivers yield to pedestrians at designated crossings? <span class="required">*</span></label>
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="driver_yield" value="never" class="custom-radio mr-3" required>
+                                <span>Never</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="driver_yield" value="rarely" class="custom-radio mr-3" required>
+                                <span>Rarely</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="driver_yield" value="sometimes" class="custom-radio mr-3" required>
+                                <span>Sometimes</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="driver_yield" value="often" class="custom-radio mr-3" required>
+                                <span>Often</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="driver_yield" value="always" class="custom-radio mr-3" required>
+                                <span>Always</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">Q15. How safe do you feel walking at night near your residence? <span class="required">*</span></label>
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                            <label class="flex items-center p-4 bg-red-50 rounded-xl cursor-pointer hover:bg-red-100 transition-all duration-200">
+                                <input type="radio" name="night_safety" value="very_unsafe" class="custom-radio mr-3" required>
+                                <span>Very unsafe</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-orange-50 rounded-xl cursor-pointer hover:bg-orange-100 transition-all duration-200">
+                                <input type="radio" name="night_safety" value="unsafe" class="custom-radio mr-3" required>
+                                <span>Unsafe</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-yellow-50 rounded-xl cursor-pointer hover:bg-yellow-100 transition-all duration-200">
+                                <input type="radio" name="night_safety" value="neutral" class="custom-radio mr-3" required>
+                                <span>Neutral</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
+                                <input type="radio" name="night_safety" value="safe" class="custom-radio mr-3" required>
+                                <span>Safe</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
+                                <input type="radio" name="night_safety" value="very_safe" class="custom-radio mr-3" required>
+                                <span>Very safe</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Section B: Walkability -->
+                <div class="space-y-6">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-primary bg-opacity-10 rounded-full p-3 mr-4">
+                            <i class="fas fa-walking text-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">Section B: Walkability of Urban Environment</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">Q16. How important is it that walkways are well-maintained and in good condition? <span class="required">*</span></label>
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="walkway_importance" value="not_important" class="custom-radio mr-3" required>
+                                <span>Not important</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="walkway_importance" value="slightly_important" class="custom-radio mr-3" required>
+                                <span>Slightly important</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="walkway_importance" value="moderately_important" class="custom-radio mr-3" required>
+                                <span>Moderately important</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="walkway_importance" value="very_important" class="custom-radio mr-3" required>
+                                <span>Very important</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
+                                <input type="radio" name="walkway_importance" value="extremely_important" class="custom-radio mr-3" required>
+                                <span>Extremely important</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">Q17. How often do you encounter obstacles or poor conditions on pedestrian walkways? <span class="required">*</span></label>
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                            <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
+                                <input type="radio" name="obstacles_frequency" value="never" class="custom-radio mr-3" required>
+                                <span>Never</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="obstacles_frequency" value="rarely" class="custom-radio mr-3" required>
+                                <span>Rarely</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="obstacles_frequency" value="sometimes" class="custom-radio mr-3" required>
+                                <span>Sometimes</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+                                <input type="radio" name="obstacles_frequency" value="often" class="custom-radio mr-3" required>
+                                <span>Often</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-red-50 rounded-xl cursor-pointer hover:bg-red-100 transition-all duration-200">
+                                <input type="radio" name="obstacles_frequency" value="always" class="custom-radio mr-3" required>
+                                <span>Always</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">Q18. How strongly do you agree that pedestrian paths efficiently connect to key destinations? <span class="required">*</span></label>
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                            <label class="flex items-center p-4 bg-red-50 rounded-xl cursor-pointer hover:bg-red-100 transition-all duration-200">
+                                <input type="radio" name="path_connectivity" value="strongly_disagree" class="custom-radio mr-3" required>
+                                <span>Strongly disagree</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-orange-50 rounded-xl cursor-pointer hover:bg-orange-100 transition-all duration-200">
+                                <input type="radio" name="path_connectivity" value="disagree" class="custom-radio mr-3" required>
+                                <span>Disagree</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-yellow-50 rounded-xl cursor-pointer hover:bg-yellow-100 transition-all duration-200">
+                                <input type="radio" name="path_connectivity" value="neutral" class="custom-radio mr-3" required>
+                                <span>Neutral</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
+                                <input type="radio" name="path_connectivity" value="agree" class="custom-radio mr-3" required>
+                                <span>Agree</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
+                                <input type="radio" name="path_connectivity" value="strongly_agree" class="custom-radio mr-3" required>
+                                <span>Strongly agree</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="block text-lg font-semibold text-gray-800">Q19. How satisfied are you with the comfort and shade provided along pedestrian routes? <span class="required">*</span></label>
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                            <label class="flex items-center p-4 bg-red-50 rounded-xl cursor-pointer hover:bg-red-100 transition-all duration-200">
+                                <input type="radio" name="comfort_satisfaction" value="very_dissatisfied" class="custom-radio mr-3" required>
+                                <span>Very dissatisfied</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-orange-50 rounded-xl cursor-pointer hover:bg-orange-100 transition-all duration-200">
+                                <input type="radio" name="comfort_satisfaction" value="dissatisfied" class="custom-radio mr-3" required>
+                                <span>Dissatisfied</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-yellow-50 rounded-xl cursor-pointer hover:bg-yellow-100 transition-all duration-200">
+                                <input type="radio" name="comfort_satisfaction" value="neutral" class="custom-radio mr-3" required>
+                                <span>Neutral</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
+                                <input type="radio" name="comfort_satisfaction" value="satisfied" class="custom-radio mr-3" required>
+                                <span>Satisfied</span>
+                            </label>
+                            <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition-all duration-200">
+                                <input type="radio" name="comfort_satisfaction" value="very_satisfied" class="custom-radio mr-3" required>
+                                <span>Very satisfied</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barriers Question -->
+                <div class="space-y-6">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-primary bg-opacity-10 rounded-full p-3 mr-4">
+                            <i class="fas fa-exclamation-triangle text-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">Walking Barriers</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+<label class="block text-lg font-semibold text-gray-800">Q20. What are the main barriers that discourage you from walking more often? (Select all that apply) <span class="required">*</span></label>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="poor_sidewalk" class="custom-checkbox mr-3" required>
+<span>Poor sidewalk condition</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="lack_shade" class="custom-checkbox mr-3">
+<span>Lack of shade or shelter</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="unsafe_crossings" class="custom-checkbox mr-3">
+<span>Unsafe road crossings</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="long_distance" class="custom-checkbox mr-3">
+<span>Long distance to bus stops</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="crime_concerns" class="custom-checkbox mr-3">
+<span>Crime or harassment concerns</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="poor_lighting" class="custom-checkbox mr-3">
+<span>Poor street lighting</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="vehicle_speeds" class="custom-checkbox mr-3">
+<span>High vehicle speeds</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="lack_signals" class="custom-checkbox mr-3">
+<span>Lack of pedestrian signals</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="no_amenities" class="custom-checkbox mr-3">
+<span>No pedestrian amenities</span>
+</label>
+<label class="flex items-center p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-primary hover:bg-opacity-10 transition-all duration-200">
+<input type="checkbox" name="barriers[]" value="narrow_sidewalks" class="custom-checkbox mr-3">
+<span>Narrow/crowded sidewalks</span>
+</label>
+</div>
+<input type="text" name="barriers_other" placeholder="Other barriers (please specify)" 
+                                class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200">
+</div>
+</div>
+                <!-- Comments -->
+                <div class="space-y-4">
+                    <label class="block text-lg font-semibold text-gray-800">
+                        <i class="fas fa-comments text-primary mr-2"></i>
+                        Q21. Additional comments or suggestions regarding pedestrian safety and walkability: <span class="required">*</span>
+                    </label>
+                    <textarea name="additional_comments" rows="6" required
+                              placeholder="Your insights are valuable and will help inform strategies to enhance safe, walkable streets..." 
+                              class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200 resize-none"></textarea>
+                </div>
+            </div>
+        </div>
+<!-- Survey Location - Replace the existing Q6b section -->
+<div class="space-y-4 lg:space-y-6">
+    <label class="block text-lg font-semibold text-gray-800">
+        <i class="fas fa-map-marker-alt text-primary mr-2"></i>
+        Q6b. Where are you taking this survey? <span class="required">*</span>
+    </label>
+    <p class="text-sm text-gray-600 mb-4 px-2 lg:px-0">
+        This helps us understand the geographic distribution of responses and can provide valuable context for your answers.
+    </p>
+    
+    <!-- Manual Location Input -->
+    <div class="bg-blue-50 p-4 lg:p-6 rounded-xl border border-blue-200 mx-2 lg:mx-0">
+        <h4 class="font-semibold text-blue-800 mb-3 text-base lg:text-lg">Enter Location (Landmark or Description)</h4>
+        <input type="text" name="survey_location" placeholder="e.g., Westlands Shopping Mall, University of Nairobi Main Campus, Kasarani Stadium" required
+               class="w-full p-3 lg:p-4 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-colors duration-200 text-sm lg:text-base">
+        <div class="text-xs lg:text-sm text-blue-600 mt-2 px-1">
+            <i class="fas fa-info-circle mr-1"></i>
+            Please provide a recognizable landmark, building, or area name where you're currently located
+        </div>
+    </div>
+    
+    <!-- GPS Location (Optional) -->
+    <div class="bg-green-50 p-4 lg:p-6 rounded-xl border border-green-200 mx-2 lg:mx-0">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-3">
+            <h4 class="font-semibold text-green-800 text-base lg:text-lg">GPS Location (Optional)</h4>
+            <button type="button" id="getLocationBtn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition-colors duration-200 w-full sm:w-auto">
+                <i class="fas fa-crosshairs mr-2"></i>Get My Location
+            </button>
+        </div>
+        
+        <!-- Manual GPS Input Option -->
+        <div class="mb-4 p-3 bg-white rounded-lg border border-green-200">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-medium text-green-700">Or enter coordinates manually:</span>
+                <button type="button" id="toggleManualGPS" class="text-green-600 hover:text-green-800 text-sm underline">
+                    Show Manual Input
+                </button>
+            </div>
+            <div id="manualGPSInputs" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Latitude</label>
+                    <input type="number" step="any" id="manualLatitude" placeholder="e.g., -1.2921" 
+                           class="w-full p-2 border border-gray-300 rounded text-sm focus:border-green-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Longitude</label>
+                    <input type="number" step="any" id="manualLongitude" placeholder="e.g., 36.8219" 
+                           class="w-full p-2 border border-gray-300 rounded text-sm focus:border-green-500 focus:outline-none">
+                </div>
+                <div class="sm:col-span-2">
+                    <button type="button" id="useManualCoords" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm transition-colors duration-200">
+                        Use These Coordinates
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input type="hidden" name="latitude" id="latitude">
+            <input type="hidden" name="longitude" id="longitude">
+            <input type="hidden" name="location_accuracy" id="locationAccuracy">
+            <input type="hidden" name="location_method" value="manual" id="locationMethod">
+            
+            <div class="bg-white p-3 rounded-lg">
+                <label class="block text-xs font-medium text-gray-600 mb-1">Latitude</label>
+                <div id="latitudeDisplay" class="text-sm text-gray-800">Not captured</div>
+            </div>
+            <div class="bg-white p-3 rounded-lg">
+                <label class="block text-xs font-medium text-gray-600 mb-1">Longitude</label>
+                <div id="longitudeDisplay" class="text-sm text-gray-800">Not captured</div>
+            </div>
+        </div>
+        <div class="text-xs lg:text-sm text-green-600 mt-2 px-1">
+            <i class="fas fa-shield-alt mr-1"></i>
+            GPS coordinates help with research accuracy but are completely optional
+        </div>
+        <div id="locationStatus" class="text-xs text-gray-500 mt-2 px-1"></div>
+    </div>
+    
+    <!-- Location Privacy Notice -->
+    <div class="bg-gray-50 p-4 lg:p-6 rounded-xl border border-gray-200 mx-2 lg:mx-0">
+        <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <i class="fas fa-user-shield text-gray-500 text-lg mt-1 flex-shrink-0"></i>
+            <div class="text-sm text-gray-600">
+                <strong>Privacy Notice:</strong> Location data is used solely for research purposes to understand geographic patterns in survey responses. All location information is kept confidential and will not be used to identify individual respondents.
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Submit Section -->
+<div class="glass-effect rounded-3xl overflow-hidden shadow-xl hover-lift" data-aos="fade-up" data-aos-delay="300">
+    <div class="submit-gradient p-8 md:p-12 text-white text-center">
+        <div class="mb-6">
+            <i class="fas fa-paper-plane text-4xl md:text-6xl opacity-90"></i>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">Thank You for Your Participation!</h2>
+        <p class="text-lg md:text-xl opacity-90 mb-6 md:mb-8 px-2">Your insights will contribute to making Nairobi's streets safer and more pedestrian-friendly.</p>
+        <button type="submit" id="submitBtn" class="bg-white text-primary px-8 md:px-12 py-3 md:py-4 rounded-full text-lg md:text-xl font-bold hover:shadow-2xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50 w-full sm:w-auto">
+            <i class="fas fa-check-circle mr-3"></i>
+            Submit Survey
+        </button>
+        <div class="mt-6 text-xs md:text-sm opacity-75 px-4">
+            <i class="fas fa-lock mr-2"></i>
+            Your responses are confidential and used strictly for academic purposes
+        </div>
+    </div>
+</div>
+<style>
+/* Add to your existing style section */
+@media (max-width: 768px) {
+    .glass-effect {
+        margin-bottom: 1.5rem;
+    }
+    
+    .gradient-bg h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    
+    .gradient-bg p {
+        font-size: 1rem;
+    }
+    
+    .grid {
+        gap: 0.75rem;
+    }
+    
+    .space-y-8 > * + * {
+        margin-top: 1.5rem;
+    }
+    
+    .rounded-3xl {
+        border-radius: 1rem;
+    }
+    
+    input[type="text"], 
+    input[type="email"], 
+    textarea, 
+    select {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    /* Better mobile form spacing */
+    .p-8 {
+        padding: 1.5rem;
+    }
+    
+    .mb-8 {
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Mobile-friendly radio/checkbox labels */
+    label.flex {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+    }
+    
+    /* Progress indicator positioning */
+    .fixed.top-6.right-6 {
+        top: 1rem;
+        right: 1rem;
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .fixed.top-6.right-6 svg {
+        width: 3rem;
+        height: 3rem;
+    }
+}</style>
+    </form>
+</div>
+
+<!-- Success Modal -->
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+    <div class="bg-white rounded-3xl p-8 m-4 max-w-md w-full text-center transform scale-95 transition-all duration-300">
+        <div class="mb-6">
+            <div class="bg-green-100 rounded-full w-20 h-20 mx-auto flex items-center justify-center">
+                <i class="fas fa-check text-green-500 text-3xl"></i>
+            </div>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Survey Submitted Successfully!</h3>
+        <p class="text-gray-600 mb-6">Thank you for your participation in this important research. Your responses have been recorded securely.</p>
+        <button onclick="closeSuccessModal()" class="bg-primary text-white px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-colors duration-200">
+            Close
+        </button>
+    </div>
+</div>
+
+<!-- AOS Animation Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+// Manual GPS input toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleManualGPS = document.getElementById('toggleManualGPS');
+    const manualGPSInputs = document.getElementById('manualGPSInputs');
+    const useManualCoords = document.getElementById('useManualCoords');
+    const manualLatitude = document.getElementById('manualLatitude');
+    const manualLongitude = document.getElementById('manualLongitude');
+
+    if (toggleManualGPS && manualGPSInputs) {
+        toggleManualGPS.addEventListener('click', function() {
+            if (manualGPSInputs.classList.contains('hidden')) {
+                manualGPSInputs.classList.remove('hidden');
+                toggleManualGPS.textContent = 'Hide Manual Input';
+            } else {
+                manualGPSInputs.classList.add('hidden');
+                toggleManualGPS.textContent = 'Show Manual Input';
+            }
+        });
+    }
+
+    if (useManualCoords) {
+        useManualCoords.addEventListener('click', function() {
+            const lat = parseFloat(manualLatitude.value);
+            const lng = parseFloat(manualLongitude.value);
+            
+            if (isNaN(lat) || isNaN(lng)) {
+                alert('Please enter valid latitude and longitude values.');
+                return;
+            }
+            
+            if (lat < -90 || lat > 90) {
+                alert('Latitude must be between -90 and 90 degrees.');
+                return;
+            }
+            
+            if (lng < -180 || lng > 180) {
+                alert('Longitude must be between -180 and 180 degrees.');
+                return;
+            }
+            
+            // Update form fields
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+            document.getElementById('locationMethod').value = 'manual';
+            
+            // Update display
+            document.getElementById('latitudeDisplay').textContent = lat.toFixed(6);
+            document.getElementById('longitudeDisplay').textContent = lng.toFixed(6);
+            
+            // Update status
+            const locationStatus = document.getElementById('locationStatus');
+            locationStatus.innerHTML = '<i class="fas fa-check-circle mr-1"></i>Manual coordinates entered successfully';
+            locationStatus.className = 'text-xs text-green-600 mt-2 px-1';
+            
+            // Hide manual inputs
+            manualGPSInputs.classList.add('hidden');
+            toggleManualGPS.textContent = 'Show Manual Input';
+        });
+    }
+});
+</script>
+<script>
+    // Initialize AOS animations
+    AOS.init({
+        duration: 800,
+        easing: 'ease-out-cubic',
+        once: true
+    });
+
+    // Form validation
+    function validateForm() {
+        const form = document.getElementById('surveyForm');
+        let isValid = true;
+        const errors = [];
+
+        // Remove previous error styling
+        form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+        form.querySelectorAll('.error-message').forEach(el => el.remove());
+
+        // Check required radio groups
+        const radioGroups = ['gender', 'age', 'education', 'occupation', 'income', 'car_ownership', 'bus_usage', 'walking_usage', 'first_mile_transport', 'main_mile_transport', 'last_mile_transport', 'general_safety', 'accident_concern', 'driver_yield', 'night_safety', 'walkway_importance', 'obstacles_frequency', 'path_connectivity', 'comfort_satisfaction'];
+        
+        radioGroups.forEach(groupName => {
+            const radios = form.querySelectorAll(`input[name="${groupName}"]`);
+            const checked = form.querySelector(`input[name="${groupName}"]:checked`);
+            if (!checked) {
+                isValid = false;
+                radios[0].closest('.space-y-4').classList.add('error');
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-message';
+                errorMsg.textContent = 'This field is required';
+                radios[0].closest('.space-y-4').appendChild(errorMsg);
+                errors.push(`${groupName.replace('_', ' ')} is required`);
+            }
+        });
+
+        // Check required text fields
+        const requiredTextFields = ['trip_origin', 'trip_destination', 'sub_county', 'ward', 'estate', 'survey_location', 'additional_comments'];
+        
+        requiredTextFields.forEach(fieldName => {
+            const field = form.querySelector(`[name="${fieldName}"]`);
+            if (field && !field.value.trim()) {
+                isValid = false;
+                field.classList.add('error');
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-message';
+                errorMsg.textContent = 'This field is required';
+                field.parentNode.appendChild(errorMsg);
+                errors.push(`${fieldName.replace('_', ' ')} is required`);
+            }
+        });
+
+        // Check barriers checkboxes (at least one required)
+        const barrierCheckboxes = form.querySelectorAll('input[name="barriers[]"]');
+        const checkedBarriers = form.querySelectorAll('input[name="barriers[]"]:checked');
+        if (checkedBarriers.length === 0) {
+            isValid = false;
+            barrierCheckboxes[0].closest('.space-y-4').classList.add('error');
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'error-message';
+            errorMsg.textContent = 'Please select at least one barrier';
+            barrierCheckboxes[0].closest('.space-y-4').appendChild(errorMsg);
+            errors.push('Barriers selection is required');
+        }
+
+        if (!isValid) {
+            // Scroll to first error
+            const firstError = form.querySelector('.error');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            // Show error summary
+            alert('Please fill in all required fields before submitting.');
+        }
+
+        return isValid;
+    }
+
+    // Progress tracking
+    function updateProgress() {
+        const form = document.getElementById('surveyForm');
+        let totalFields = 0;
+        let filledFields = 0;
+
+        // Count radio groups
+        const radioGroups = ['gender', 'age', 'education', 'occupation', 'income', 'car_ownership', 'bus_usage', 'walking_usage', 'first_mile_transport', 'main_mile_transport', 'last_mile_transport', 'general_safety', 'accident_concern', 'driver_yield', 'night_safety', 'walkway_importance', 'obstacles_frequency', 'path_connectivity', 'comfort_satisfaction'];
+        
+        radioGroups.forEach(groupName => {
+            totalFields++;
+            const checked = form.querySelector(`input[name="${groupName}"]:checked`);
+            if (checked) filledFields++;
+        });
+
+        // Count required text fields
+        const requiredTextFields = ['trip_origin', 'trip_destination', 'sub_county', 'ward', 'estate', 'additional_comments'];
+        
+        requiredTextFields.forEach(fieldName => {
+            totalFields++;
+            const field = form.querySelector(`[name="${fieldName}"]`);
+            if (field && field.value.trim()) filledFields++;
+        });
+
+        // Count barriers (counts as 1 field)
+        totalFields++;
+        const checkedBarriers = form.querySelectorAll('input[name="barriers[]"]:checked');
+        if (checkedBarriers.length > 0) filledFields++;
+
+        const progress = Math.min((filledFields / totalFields) * 100, 100);
+        
+        // Update progress bar
+        document.getElementById('progressBar').style.width = progress + '%';
+        
+        // Update circular progress
+        const progressRing = document.getElementById('progressRing');
+        const progressText = document.getElementById('progressText');
+        const circumference = 2 * Math.PI * 15.9155;
+        const offset = circumference - (progress / 100) * circumference;
+        
+        progressRing.style.strokeDashoffset = offset;
+        progressText.textContent = Math.round(progress) + '%';
+    }
+
+    // Form submission
+    document.getElementById('surveyForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Validate form first
+        if (!validateForm()) {
+            return;
+        }
+
+        const submitBtn = document.getElementById('submitBtn');
+        const originalText = submitBtn.innerHTML;
+        
+        // Show loading state
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i>Submitting...';
+        submitBtn.disabled = true;
+        
+        try {
+            const formData = new FormData(this);
+            
+            // Add timestamp
+            formData.append('submission_time', new Date().toISOString());
+            
+            const response = await fetch('submit_survey.php', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                showSuccessModal();
+                clearDraft();
+            } else {
+                throw new Error('Submission failed');
+            }
+        } catch (error) {
+            alert('There was an error submitting your survey. Please try again.');
+            console.error('Error:', error);
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // Success modal functions
+    function showSuccessModal() {
+        const modal = document.getElementById('successModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        setTimeout(() => {
+            modal.querySelector('div').classList.remove('scale-95');
+            modal.querySelector('div').classList.add('scale-100');
+        }, 10);
+    }
+
+    function closeSuccessModal() {
+        const modal = document.getElementById('successModal');
+        modal.querySelector('div').classList.remove('scale-100');
+        modal.querySelector('div').classList.add('scale-95');
+        setTimeout(() => {
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }, 300);
+    }
+
+    // Update progress on input change
+    document.addEventListener('change', updateProgress);
+    document.addEventListener('input', updateProgress);
+
+    // Smooth scrolling for better UX
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Initialize progress on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateProgress();
+    });
+
+    // Auto-save functionality (optional)
+    let autoSaveInterval;
+    function startAutoSave() {
+        autoSaveInterval = setInterval(() => {
+            const formData = new FormData(document.getElementById('surveyForm'));
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+            localStorage.setItem('survey_draft', JSON.stringify(data));
+        }, 30000); // Save every 30 seconds
+    }
+
+    // Load saved draft
+    function loadDraft() {
+        const draft = localStorage.getItem('survey_draft');
+        if (draft) {
+            const data = JSON.parse(draft);
+            Object.entries(data).forEach(([name, value]) => {
+                if (Array.isArray(value)) {
+                    value.forEach(v => {
+                        const input = document.querySelector(`[name="${name}"][value="${v}"]`);
+                        if (input) {
+                            input.checked = true;
+                        }
+                    });
+                } else {
+                    const input = document.querySelector(`[name="${name}"]`);
+                    if (input) {
+                        if (input.type === 'radio' || input.type === 'checkbox') {
+                            const specificInput = document.querySelector(`[name="${name}"][value="${value}"]`);
+                            if (specificInput) specificInput.checked = true;
+                        } else {
+                            input.value = value;
+                        }
+                    }
+                }
+            });
+            updateProgress();
+        }
+    }
+
+    // Clear draft after successful submission
+    function clearDraft() {
+        localStorage.removeItem('survey_draft');
+    }
+
+    // Initialize auto-save and load draft
+    document.addEventListener('DOMContentLoaded', function() {
+        loadDraft();
+        startAutoSave();
+    });
+    
+    
+    // Location functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const getLocationBtn = document.getElementById('getLocationBtn');
+    const locationStatus = document.getElementById('locationStatus');
+    const latitudeInput = document.getElementById('latitude');
+    const longitudeInput = document.getElementById('longitude');
+    const accuracyInput = document.getElementById('locationAccuracy');
+    const methodInput = document.getElementById('locationMethod');
+    const latitudeDisplay = document.getElementById('latitudeDisplay');
+    const longitudeDisplay = document.getElementById('longitudeDisplay');
+
+    if (getLocationBtn) {
+        getLocationBtn.addEventListener('click', function() {
+            if (!navigator.geolocation) {
+                locationStatus.textContent = 'Geolocation is not supported by this browser.';
+                locationStatus.className = 'text-xs text-red-500 mt-2';
+                return;
+            }
+
+            // Update button to loading state
+            const originalText = getLocationBtn.innerHTML;
+            getLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Getting Location...';
+            getLocationBtn.disabled = true;
+            locationStatus.textContent = 'Requesting location permission...';
+            locationStatus.className = 'text-xs text-blue-500 mt-2';
+
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 300000 // 5 minutes
+            };
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+
+                    // Update form fields
+                    latitudeInput.value = lat;
+                    longitudeInput.value = lng;
+                    accuracyInput.value = accuracy;
+                    methodInput.value = 'gps';
+
+                    // Update display
+                    latitudeDisplay.textContent = lat.toFixed(6);
+                    longitudeDisplay.textContent = lng.toFixed(6);
+
+                    // Update status
+                    locationStatus.innerHTML = `<i class="fas fa-check-circle mr-1"></i>Location captured successfully (±${Math.round(accuracy)}m accuracy)`;
+                    locationStatus.className = 'text-xs text-green-600 mt-2';
+
+                    // Reset button
+                    getLocationBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Location Captured';
+                    getLocationBtn.disabled = false;
+                    getLocationBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                    getLocationBtn.classList.add('bg-green-500');
+
+                    // Try to get address (reverse geocoding) - optional
+                    tryReverseGeocode(lat, lng);
+                },
+                function(error) {
+                    let errorMessage = 'Unable to get location. ';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage += 'Location access denied by user.';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage += 'Location information unavailable.';
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage += 'Location request timed out.';
+                            break;
+                        default:
+                            errorMessage += 'An unknown error occurred.';
+                            break;
+                    }
+
+                    locationStatus.textContent = errorMessage;
+                    locationStatus.className = 'text-xs text-red-500 mt-2';
+
+                    // Reset button
+                    getLocationBtn.innerHTML = originalText;
+                    getLocationBtn.disabled = false;
+                },
+                options
+            );
+        });
+    }
+
+    // Optional: Try to get readable address from coordinates
+    function tryReverseGeocode(lat, lng) {
+        // This is optional - you could integrate with a geocoding service
+        // For now, we'll just show coordinates
+        console.log(`Location captured: ${lat}, ${lng}`);
+    }
+
+    // Update progress calculation to include location field
+    const originalUpdateProgress = window.updateProgress;
+    window.updateProgress = function() {
+        const form = document.getElementById('surveyForm');
+        let totalFields = 0;
+        let filledFields = 0;
+
+        // Count radio groups
+        const radioGroups = ['gender', 'age', 'education', 'occupation', 'income', 'car_ownership', 'bus_usage', 'walking_usage', 'first_mile_transport', 'main_mile_transport', 'last_mile_transport', 'general_safety', 'accident_concern', 'driver_yield', 'night_safety', 'walkway_importance', 'obstacles_frequency', 'path_connectivity', 'comfort_satisfaction'];
+        
+        radioGroups.forEach(groupName => {
+            totalFields++;
+            const checked = form.querySelector(`input[name="${groupName}"]:checked`);
+            if (checked) filledFields++;
+        });
+
+        // Count required text fields (including new survey_location)
+        const requiredTextFields = ['trip_origin', 'trip_destination', 'sub_county', 'ward', 'estate', 'survey_location', 'additional_comments'];
+        
+        requiredTextFields.forEach(fieldName => {
+            totalFields++;
+            const field = form.querySelector(`[name="${fieldName}"]`);
+            if (field && field.value.trim()) filledFields++;
+        });
+
+        // Count barriers (counts as 1 field)
+        totalFields++;
+        const checkedBarriers = form.querySelectorAll('input[name="barriers[]"]:checked');
+        if (checkedBarriers.length > 0) filledFields++;
+
+        const progress = Math.min((filledFields / totalFields) * 100, 100);
+        
+        // Update progress bar
+        document.getElementById('progressBar').style.width = progress + '%';
+        
+        // Update circular progress
+        const progressRing = document.getElementById('progressRing');
+        const progressText = document.getElementById('progressText');
+        const circumference = 2 * Math.PI * 15.9155;
+        const offset = circumference - (progress / 100) * circumference;
+        
+        progressRing.style.strokeDashoffset = offset;
+        progressText.textContent = Math.round(progress) + '%';
+    };
+});
+</script>
+</body>
+</html>
